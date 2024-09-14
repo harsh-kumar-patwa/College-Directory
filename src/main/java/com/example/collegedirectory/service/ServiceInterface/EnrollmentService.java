@@ -10,4 +10,6 @@ public interface EnrollmentService {
     List<Enrollment> findAllEnrollments();
     List<Enrollment> findByStudent(Long studentId);
     List<Enrollment> findByCourse(Long courseId);
+    Enrollment enrollStudentInCourse(Long studentId, Long courseId);
+    boolean unenrollStudentFromCourse(Long studentId, Long courseId);
 }

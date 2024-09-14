@@ -18,6 +18,12 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public List<User> searchUsers(String query) {
+        // Implement search logic here. This is a simple example.
+        return userRepository.findByUsernameContainingOrNameContaining(query, query);
+    }
+
+    @Override
     public User saveUser(User user) {
         return userRepository.save(user);
     }

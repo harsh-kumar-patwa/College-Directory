@@ -10,4 +10,5 @@ public interface CourseService {
     List<Course> findAllCourses();
     List<Course> findByDepartment(Long departmentId);
     List<Course> findByFaculty(Long facultyId);
+    boolean registerStudentForCourse(Long courseId, Long studentId);
 }
