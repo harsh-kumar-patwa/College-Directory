@@ -30,6 +30,16 @@ public class UserController {
         }
     }
 
+    @GetMapping("/{userName}")
+    public ResponseEntity<User> getUserByUserName(@PathVariable String userName) {
+        User user = userService.findByUsername(userName);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
         return ResponseEntity.ok(userService.saveUser(user));
@@ -58,7 +68,6 @@ public class UserController {
     }
     @GetMapping("/search")
     public ResponseEntity<List<User>> searchUsers(@RequestParam String query) {
-        // This assumes you've added a searchUsers method to your UserService
         List<User> users = userService.searchUsers(query);
         return ResponseEntity.ok(users);
     }

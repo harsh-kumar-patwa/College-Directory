@@ -69,7 +69,6 @@ public class CourseController {
 
     @PostMapping("/{courseId}/register")
     public ResponseEntity<Void> registerForCourse(@PathVariable Long courseId, @RequestParam Long studentId) {
-        // This assumes you've added a registerStudentForCourse method to your CourseService
         boolean success = courseService.registerStudentForCourse(courseId, studentId);
         if (success) {
             return ResponseEntity.ok().build();

@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/administrators")
@@ -18,6 +20,13 @@ public class AdministratorProfileController {
     @GetMapping
     public ResponseEntity<List<AdministratorProfile>> getAllAdministratorProfiles() {
         return ResponseEntity.ok(administratorProfileService.findAllAdministratorProfiles());
+    }
+    @GetMapping("/dashboard")
+    public ResponseEntity<Map<String, Object>> getAdminDashboard() {
+        Map<String, Object> dashboardData = new HashMap<>();
+        dashboardData.put("studentEnrollmentTrends", administratorProfileService.getStudentEnrollmentTrends());
+        dashboardData.put("facultyCourseLoads", administratorProfileService.getFacultyCourseLoads());
+        return ResponseEntity.ok(dashboardData);
     }
 
     @GetMapping("/{id}")

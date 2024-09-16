@@ -9,6 +9,9 @@ import lombok.Setter;
 @Setter
 public class AdministratorProfile {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;

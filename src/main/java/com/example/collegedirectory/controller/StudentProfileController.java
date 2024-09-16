@@ -1,10 +1,13 @@
 package com.example.collegedirectory.controller;
 
+import com.example.collegedirectory.dto.FacultyAdvisorDTO;
+import com.example.collegedirectory.dto.StudentProfileDTO;
 import com.example.collegedirectory.model.StudentProfile;
 import com.example.collegedirectory.service.ServiceInterface.StudentProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 import java.util.Map;
@@ -19,6 +22,16 @@ public class StudentProfileController {
     @GetMapping
     public ResponseEntity<List<StudentProfile>> getAllStudentProfiles() {
         return ResponseEntity.ok(studentProfileService.findAllStudentProfiles());
+    }
+
+    @GetMapping("/{id}/profile")
+    public ResponseEntity<StudentProfileDTO> getStudentProfile(@PathVariable Long id) {
+        StudentProfileDTO profile = studentProfileService.getStudentProfile(id);
+        if (profile != null) {
+            return ResponseEntity.ok(profile);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/{id}")
@@ -65,7 +78,6 @@ public class StudentProfileController {
 
     @GetMapping("/{id}/dashboard")
     public ResponseEntity<Map<String, Object>> getStudentDashboard(@PathVariable Long id) {
-        // This assumes you've added a getStudentDashboard method to your StudentProfileService
         Map<String, Object> dashboard = studentProfileService.getStudentDashboard(id);
         if (dashboard != null) {
             return ResponseEntity.ok(dashboard);
@@ -73,4 +85,31 @@ public class StudentProfileController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("/search")
+    public ResponseEntity<List<StudentProfileDTO>> searchStudents(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Long departmentId,
+            @RequestParam(required = false) String year) {
+        List<StudentProfileDTO> students = studentProfileService.searchStudents(name, departmentId, year);
+        return ResponseEntity.ok(students);
+    }
+    @GetMapping("/{id}/advisors")
+    public ResponseEntity<List<FacultyAdvisorDTO>> getFacultyAdvisors(@PathVariable Long id) {
+        List<FacultyAdvisorDTO> advisors = studentProfileService.getFacultyAdvisors(id);
+        return ResponseEntity.ok(advisors);
+    }
+
+    @PostMapping("/{studentId}/contact-advisor/{facultyId}")
+    public ResponseEntity<String> contactFacultyAdvisor(
+            @PathVariable Long studentId,
+            @PathVariable Long facultyId,
+            @RequestBody String message) {
+        boolean success = studentProfileService.contactFacultyAdvisor(studentId, facultyId, message);
+        if (success) {
+            return ResponseEntity.ok("Message sent successfully");
+        } else {
+            return ResponseEntity.badRequest().body("Failed to send message");
+        }
+    }
+
 }

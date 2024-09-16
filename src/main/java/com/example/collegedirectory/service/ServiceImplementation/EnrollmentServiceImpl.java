@@ -10,6 +10,7 @@ import com.example.collegedirectory.service.ServiceInterface.EnrollmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -65,6 +66,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
             Enrollment enrollment = new Enrollment();
             enrollment.setStudent(student);
             enrollment.setCourse(course);
+            enrollment.setEnrollmentDate(LocalDate.now()); // Set the enrollment date
             return enrollmentRepository.save(enrollment);
         }
         return null;

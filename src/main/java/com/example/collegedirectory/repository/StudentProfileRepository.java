@@ -8,4 +8,6 @@ import java.util.List;
 public interface StudentProfileRepository extends JpaRepository<StudentProfile, Long> {
 
     List<StudentProfile> findByDepartmentId(Long departmentId);
+
+    List<StudentProfile> findByUser_NameContainingAndDepartment_IdAndYear(String name, Long departmentId, String year);
 }

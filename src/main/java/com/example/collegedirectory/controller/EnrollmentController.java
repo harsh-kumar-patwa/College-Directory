@@ -69,7 +69,6 @@ public class EnrollmentController {
 
     @PostMapping("/enroll")
     public ResponseEntity<Enrollment> enrollStudentInCourse(@RequestParam Long studentId, @RequestParam Long courseId) {
-        // This method assumes you've added an enrollStudentInCourse method to your EnrollmentService
         Enrollment newEnrollment = enrollmentService.enrollStudentInCourse(studentId, courseId);
         if (newEnrollment != null) {
             return ResponseEntity.ok(newEnrollment);
@@ -80,7 +79,6 @@ public class EnrollmentController {
 
     @DeleteMapping("/unenroll")
     public ResponseEntity<Void> unenrollStudentFromCourse(@RequestParam Long studentId, @RequestParam Long courseId) {
-        // This method assumes you've added an unenrollStudentFromCourse method to your EnrollmentService
         boolean success = enrollmentService.unenrollStudentFromCourse(studentId, courseId);
         if (success) {
             return ResponseEntity.ok().build();
